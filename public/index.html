@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Data Matrix Code (DMC) Generator</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div id="content">
+      <ul id="tabs"></ul>
+      <div id="tab-content">
+        <form onSubmit="generate()">
+          <label for="value">Content: </label>
+          <input type="text" id="value" autocomplete="off" />
+          <button>Generate</button>
+        </form>
+        <div id="svg"></div>
+      </div>
+      <h1 id="history-title">History</h1>
+      <ul id="history-content"></ul>
+    </div>
+
+    <script src="datamatrix.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

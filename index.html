@@ -14,9 +14,10 @@
         <form onSubmit="generate()">
           <label for="value">Content: </label>
           <input type="text" id="value" autocomplete="off" />
-          <button>Generate</button>
+          <button type="submit">Generate</button>
+          <button type="button" id="download">Download</button>
         </form>
-        <a id="svg" href="#" title="click to download as svg"></a>
+        <div id="svg" title="click to download as svg"></div>
       </div>
       <h1 id="history-title">History</h1>
       <ul id="history-content"></ul>

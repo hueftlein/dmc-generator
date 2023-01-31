@@ -38,11 +38,6 @@ const download = () => {
   }
 };
 
-document.getElementById("svg").onclick = (e) => {
-  e.preventDefault();
-  download();
-};
-
 const updateTabContent = () => {
   document.getElementById("value").setAttribute("data-value", activeTab);
   document.getElementById("svg").replaceChildren(
@@ -50,6 +45,7 @@ const updateTabContent = () => {
       ? DATAMatrix({
           msg: codes[activeTab],
           dim: 256,
+          pad: 1,
           pal: ["#000000", "#f2f4f8"],
         })
       : ""
@@ -168,6 +164,12 @@ const fromUrl = () => {
   localStorage.setItem("activeTab", activeTab);
   localStorage.setItem("history", JSON.stringify(history));
   render();
+};
+
+document.getElementById("download").onclick = (e) => {
+  e.preventDefault();
+  generate();
+  download();
 };
 
 fromUrl();

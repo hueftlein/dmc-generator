@@ -91,9 +91,11 @@ const render = () => {
   updateTabContent();
   updateHistory();
   fillCodes("data-content", "textContent", codes);
+  fillCodes("data-content", "href", codes);
   fillCodes("data-history-content", "textContent", history);
   fillCodes("data-history-content", "href", history);
   fillCodes("data-value", "value", codes);
+  window.location.hash = "#" + encodeURIComponent(codes[activeTab]);
   document.getElementById("value").focus();
   document.getElementById("value").select();
 };
@@ -106,7 +108,6 @@ const generate = () => {
   localStorage.setItem("codes", JSON.stringify(codes));
   localStorage.setItem("history", JSON.stringify(history));
   render();
-  window.location.hash = "#" + encodeURIComponent(codes[activeTab]);
 };
 
 const goToTab = (i) => {

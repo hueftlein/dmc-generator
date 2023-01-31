@@ -19,14 +19,40 @@ const updateTabs = () => {
     codes.map((_, i) => tabTemplate(i)).join("") + newTabTemplate;
 };
 
+const download = () => {
+  if (codes[activeTab]) {
+    const a = document.createElement("a");
+    const url = URL.createObjectURL(
+      new Blob([document.getElementById("svg").innerHTML], {
+        type: "image/svg+xml",
+      })
+    );
+    a.href = url;
+    a.download = codes[activeTab] + ".svg";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+};
+
+document.getElementById("svg").onclick = (e) => {
+  e.preventDefault();
+  download();
+};
+
 const updateTabContent = () => {
   document.getElementById("value").setAttribute("data-value", activeTab);
   document.getElementById("svg").replaceChildren(
-    DATAMatrix({
-      msg: codes[activeTab],
-      dim: 256,
-      pal: ["#000000", "#f2f4f8"],
-    })
+    codes[activeTab]
+      ? DATAMatrix({
+          msg: codes[activeTab],
+          dim: 256,
+          pal: ["#000000", "#f2f4f8"],
+        })
+      : ""
   );
 };
 
@@ -44,7 +70,13 @@ const updateHistory = () => {
 
 const fillCodes = (queryAttr, fillAttr, source) => {
   document.querySelectorAll(`[${queryAttr}]`).forEach((element) => {
-    element[fillAttr] = source[parseInt(element.getAttribute(queryAttr))] || "";
+    element[fillAttr] =
+      fillAttr === "href"
+        ? "#" +
+          encodeURIComponent(
+            source[parseInt(element.getAttribute(queryAttr))] || ""
+          )
+        : source[parseInt(element.getAttribute(queryAttr))] || "";
   });
 };
 
@@ -60,20 +92,21 @@ const render = () => {
   updateHistory();
   fillCodes("data-content", "textContent", codes);
   fillCodes("data-history-content", "textContent", history);
+  fillCodes("data-history-content", "href", history);
   fillCodes("data-value", "value", codes);
   document.getElementById("value").focus();
   document.getElementById("value").select();
 };
-render();
 
 const generate = () => {
   codes[activeTab] = document.getElementById("value").value;
-  if (history[history.length - 1] !== codes[activeTab]) {
+  if (history[0] !== codes[activeTab]) {
     history.unshift(codes[activeTab]);
   }
   localStorage.setItem("codes", JSON.stringify(codes));
   localStorage.setItem("history", JSON.stringify(history));
   render();
+  window.location.hash = "#" + encodeURIComponent(codes[activeTab]);
 };
 
 const goToTab = (i) => {
@@ -113,3 +146,27 @@ const fromHistory = (i) => {
   localStorage.setItem("activeTab", activeTab);
   render();
 };
+
+const fromUrl = () => {
+  const code = decodeURIComponent(window.location.hash.substring(1));
+  if (!code) {
+    render();
+    return;
+  }
+  const index = history.indexOf(code);
+  if (index > -1) {
+    fromHistory(index);
+  } else {
+    newTab();
+    codes[activeTab] = code;
+    if (history[history.length - 1] !== codes[activeTab]) {
+      history.unshift(codes[activeTab]);
+    }
+  }
+  localStorage.setItem("codes", JSON.stringify(codes));
+  localStorage.setItem("activeTab", activeTab);
+  localStorage.setItem("history", JSON.stringify(history));
+  render();
+};
+
+fromUrl();

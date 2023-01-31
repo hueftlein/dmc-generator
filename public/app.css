@@ -223,6 +223,7 @@ body {
 #tab-content #svg {
   flex: 1;
   margin: 0 auto;
+  display: block;
 }
 
 #tab-content svg {

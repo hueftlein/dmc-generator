@@ -1,16 +1,39 @@
+const closeSvg = `
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3 3L21 21" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+  <path d="M21 3L3 21" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+</svg>
+`;
+
+const addSvg = `
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 3L12 21" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <path d="M21 12L3 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+</svg>
+
+`;
+
 const codes = JSON.parse(localStorage.getItem("codes") || '["Hello"]');
 const history = JSON.parse(localStorage.getItem("history") || "[]");
 let activeTab = parseInt(localStorage.getItem("activeTab")) || 0;
 
+const getTabClass = (isActive) =>
+  `inline-flex flex-nowrap items-stretch border-r border-slate-900 dark:border-slate-300 ${
+    isActive ? "bg-slate-100 dark:bg-slate-800 -mb-px" : ""
+  }`;
+
 const tabTemplate = (i) =>
   `
-    <li ${activeTab === i ? 'class="active"' : ""}>
-        <a href="#" onClick="goToTab(${i})" data-content="${i}"></a>
-        <a href="#" onClick="closeTab(${i})" class="close">✖</a>
+    <li class="${getTabClass(activeTab === i)}">
+        <a href="#" onClick="goToTab(${i})" data-content="${i}" class="p-4 pr-2"></a>
+        <a href="#" onClick="closeTab(${i})" class="p-4 pl-2 font-semibold text-xl inline-flex items-center">${closeSvg}</a>
     </li>
     `;
 
-const newTabTemplate = `<li><a href="#" class="new" onClick="newTab()">➕</a></li>`;
+const newTabTemplate = `
+<li class="${getTabClass()}">
+  <a href="#" class="p-4 font-semibold text-xl inline-flex items-center" onClick="newTab()" >${addSvg}</a>
+</li>`;
 
 const tabs = document.getElementById("tabs");
 

@@ -66,7 +66,7 @@ const updateTabContent = () => {
     codes[activeTab]
       ? DATAMatrix({
         msg: codes[activeTab],
-        dim: 512,
+        dim: 256,
         pad: 1,
         pal: ["#000000", "#f2f4f8"],
       })
@@ -100,12 +100,6 @@ const fillCodes = (queryAttr, fillAttr, source) => {
 };
 
 const render = () => {
-  document
-    .querySelector(":root")
-    .style.setProperty(
-      "--tab-max-width",
-      `${Math.min(50, 100 / codes.length)}%`
-    );
   updateTabs();
   updateTabContent();
   updateHistory();

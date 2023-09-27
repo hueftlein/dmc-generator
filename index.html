@@ -6,33 +6,53 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>🔳 Data Matrix Code (DMC) Generator</title>
     <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
   <body>
-    <div id="content">
-      <ul id="tabs"></ul>
-      <div id="tab-content">
-        <form onSubmit="generate()">
-          <label for="value">Content: </label>
-          <input type="text" id="value" autocomplete="off" />
-          <button type="submit">Generate</button>
-          <button type="button" id="download">Download</button>
-        </form>
-        <div id="svg"></div>
-      </div>
-      <h1 id="history-title">History</h1>
-      <ul id="history-content"></ul>
-      <div id="footer">
-        This website is not using any cookies, ads or analytics. It's
-        <a href="https://github.com/hueftlein/dmc-generator" target="_blank"
-          >open source</a
-        >, using the FOSS library
-        <a href="https://github.com/datalog/datamatrix-svg" target="_blank"
-          >datamatrix-svg</a
+      <div
+        id="content"
+        class="container mx-auto grid grid-cols-[70%_30%] gap-0 rounded-xl m-8 overflow-hidden bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-300 border border-slate-900 dark:border-slate-300"
+      >
+        <ul
+          id="tabs"
+          class="flex flex-nowrap text-xl font-medium bg-slate-300 dark:bg-slate-600 border-b border-slate-900 dark:border-slate-300 overflow-x-auto overflow-y-hidden"
+        ></ul>
+        <h1
+          id="history-title"
+          class="text-xl font-medium border-l border-b border-slate-900 dark:border-slate-300 bg-slate-300 dark:bg-slate-600 flex items-center p-4"
         >
-        and is hosted on
-        <a href="https://github.com/" target="_blank">GitHub</a>. ♥
+          History
+        </h1>
+        <div id="tab-content" class="p-4 flex flex-col max-h-[60vh]">
+          <form onSubmit="generate()" class="flex items-center">
+            <label for="value" class="block text-gray-700 font-bold mr-2">Content: </label>
+            <input type="text" id="value" autocomplete="off" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-2 shadow">Generate</button>
+            <button type="button" id="download" class="font-bold text-blue-500 p-2 -mr-2">Download</button>
+          </form>
+          <div class="flex justify-center grow overflow-auto">
+            <div id="svg" class="aspect-square max-w-full"></div>
+          </div>
+        </div>
+        <ul
+          id="history-content"
+          class="border-l border-slate-900 dark:border-slate-300 p-4 overflow-y-auto overflow-x-hidden max-h-[60vh]"
+        ></ul>
+        <footer
+          class="col-span-2 p-4 border-t border-slate-900 dark:border-slate-300 text-sm"
+        >
+          This website is not using any cookies, ads or analytics. It's
+          <a href="https://github.com/hueftlein/dmc-generator" target="_blank" class="underline"
+            >open source</a
+          >, using the FOSS library
+          <a href="https://github.com/datalog/datamatrix-svg" target="_blank" class="underline"
+            >datamatrix-svg</a
+          >, <a href="https://tailwindcss.com/" target="_blank" class="underline">tailwindcss</a>,
+          <a href="https://rsms.me/inter/" target="_blank" class="underline">inter</a>
+          and is hosted on
+          <a href="https://github.com/" target="_blank" class="underline">GitHub</a>. ♥
+        </footer>
       </div>
-    </div>
 
     <script src="datamatrix.min.js"></script>
     <script src="app.js"></script>

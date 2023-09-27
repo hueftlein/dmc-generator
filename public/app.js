@@ -18,14 +18,13 @@ const history = JSON.parse(localStorage.getItem("history") || "[]");
 let activeTab = parseInt(localStorage.getItem("activeTab")) || 0;
 
 const getTabClass = (isActive) =>
-  `inline-flex flex-nowrap items-stretch border-r border-slate-900 dark:border-slate-300 ${
-    isActive ? "bg-slate-100 dark:bg-slate-800 -mb-px" : ""
+  `inline-flex flex-nowrap items-stretch border-r border-slate-900 dark:border-slate-300 ${isActive ? "bg-slate-100 dark:bg-slate-800 -mb-px" : ""
   }`;
 
 const tabTemplate = (i) =>
   `
     <li class="${getTabClass(activeTab === i)}">
-        <a href="#" onClick="goToTab(${i})" data-content="${i}" class="p-4 pr-2"></a>
+        <a href="#" onClick="goToTab(${i})" data-content="${i}" class="p-4 pr-2 truncate"></a>
         <a href="#" onClick="closeTab(${i})" class="p-4 pl-2 font-semibold text-xl inline-flex items-center">${closeSvg}</a>
     </li>
     `;
@@ -66,19 +65,20 @@ const updateTabContent = () => {
   document.getElementById("svg").replaceChildren(
     codes[activeTab]
       ? DATAMatrix({
-          msg: codes[activeTab],
-          dim: 256,
-          pad: 1,
-          pal: ["#000000", "#f2f4f8"],
-        })
+        msg: codes[activeTab],
+        dim: 512,
+        pad: 1,
+        pal: ["#000000", "#f2f4f8"],
+      })
       : ""
   );
 };
 
 const historyTemplate = (i) =>
   `
-    <li ${codes[activeTab] === history[i] ? 'class="active"' : ""}>
-        <a href="#" onClick="fromHistory(${i})" data-history-content="${i}"></a>
+  ${codes[activeTab] === history[i] ? "" : ""}
+    <li class="">
+        <a href="#" onClick="fromHistory(${i})" data-history-content="${i}" class="p-2 truncate block rounded hover:bg-slate-300"></a>
     </li>
     `;
 
@@ -92,9 +92,9 @@ const fillCodes = (queryAttr, fillAttr, source) => {
     element[fillAttr] =
       fillAttr === "href"
         ? "#" +
-          encodeURIComponent(
-            source[parseInt(element.getAttribute(queryAttr))] || ""
-          )
+        encodeURIComponent(
+          source[parseInt(element.getAttribute(queryAttr))] || ""
+        )
         : source[parseInt(element.getAttribute(queryAttr))] || "";
   });
 };

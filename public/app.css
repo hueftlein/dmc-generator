@@ -646,6 +646,10 @@ video {
   width: 100%;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .grow {
   flex-grow: 1;
 }
@@ -662,6 +666,10 @@ video {
 
 .grid-cols-\[70\%_30\%\] {
   grid-template-columns: 70% 30%;
+}
+
+.grid-cols-\[70\%_0\%\] {
+  grid-template-columns: 70% 0%;
 }
 
 .flex-col {
@@ -686,6 +694,10 @@ video {
 
 .gap-0 {
   gap: 0px;
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-hidden {
